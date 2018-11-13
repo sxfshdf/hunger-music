@@ -1,0 +1,250 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html,body,main{
+  height: 100%;
+}
+a{
+  text-decoration: none;
+}
+ul,li{
+  list-style: none;
+}
+html,body,section{
+  height: 100%;
+  overflow: hidden;
+}
+.layout{
+  margin: 0 auto;
+  width: 600px;
+}
+@media (min-width: 700px){
+  .layout{
+    margin: 0 auto;
+    width: 600px;
+  }
+}
+@media (min-width: 900px){
+  .layout{
+    margin: 0 auto;
+    width: 800px;
+  }
+}
+@media (min-width: 1000px){
+  .layout{
+    margin: 0 auto;
+    width: 900px;
+  }
+}
+@media (min-width: 1200px){
+  .layout{
+    margin: 0 auto;
+    width: 1100px;
+  }
+}
+.bg{
+  position: absolute;
+  z-index: -1;
+  top: -10px;
+  bottom: -10px;
+  left: -10px;
+  right: -10px;
+  background: url(https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f8ff9dd85bffba1681747d2cfae3f8b7&auto=format&fit=crop&w=980&q=80);
+  background-size: cover;
+  filter: blur(6px);
+}
+.bg::before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(24,27,63,0.8);
+}
+main{
+  height: calc(100% - 24vh);
+  padding-top: 12vh;
+  display: flex;
+}
+
+main .left > figure{
+  /* border: 1px solid red; */
+  height: 46vh;
+  width: 46vh;
+  background-image: url(https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f8ff9dd85bffba1681747d2cfae3f8b7&auto=format&fit=crop&w=980&q=80);
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;; 
+}
+main .left .actions{
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  vertical-align: center;
+  margin-top: 4vh;
+  text-align: center;
+}
+main .left .actions > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6vh;
+  height: 6vh;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+main .left .actions > div:hover{
+  background: rgb(252,41,83);
+}
+
+main .left .icon{
+  height: 2vh;
+  width: 2vh;
+  fill: white;
+}
+main .detail{
+  width: 100%;
+  margin-left: 10vh;
+}
+main .detail .tag{
+  display: inline-block;
+  font-size: 2vh;
+  padding: 0.6vh 1vh;
+  background: rgb(252,41,83);
+  color: white; 
+  border-radius: 2px;
+}
+main .detail h1{
+  color: white;
+  font-size: 6vh;
+  margin-top: 2vh;
+}
+main .detail ul{
+  display: flex;
+  margin-top: 4vh;
+  font-size: 2vh;
+}
+main .detail ul li{
+  color: rgba(255,255,255,0.6);
+  margin-right: 16vh;
+  display: flex;
+  align-items: center;
+}
+main .detail ul li span{
+  display: inline-block;
+  margin-left: 1vh;
+}
+main .detail .timeBar{
+  display: flex;
+  margin-top: 16vh;
+  align-items: center;
+}
+main .detail .timeBar .bar{
+  flex: 1;
+  position: relative;
+  height: 0.8vh;
+  border-radius: 0.4vh;
+  background: rgba(255,255,255,0.2);
+}
+main .detail .timeBar .currentTime{
+  width: 3vh;
+  margin-left: 1vh;
+  font-size: 1.8vh;
+  color:  white;
+}
+main .detail .timeBar .progressBar{
+  position: absolute;
+  height: 0.8vh;
+  width: 15%;
+  background: white;
+  border-radius: 0.4vh;
+}
+main .detail .auther{
+  margin-top: 5vh;
+  font-size: 3vh;
+  color: white;
+}
+main .detail .special{
+  margin-top: 2vh;
+  font-size: 2vh;
+  color: rgba(255,255,255,0.4);
+}
+footer{
+  height: 24vh;
+  color: white;
+}
+footer .box{
+  position: relative;
+  /* overflow: hidden; */
+  font-size: 2vh;
+}
+footer .box > div{
+  position: absolute;
+  top: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  opacity: 0;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+footer .box > div:hover{
+  background: rgb(252,41,83);
+}
+footer:hover .box > div{
+  opacity: 1;
+}
+footer .box .left_arrow{
+  left: -10vh;
+}
+footer .box .left_arrow .icon{
+  margin-left: -0.4vh;
+}
+footer .box .right_arrow{
+  right: -10vh;
+}
+footer .box .right_arrow .icon{
+  margin-right: -0.2vh;
+}
+footer ul::after{
+  content: '';
+  display: block;
+  clear: both;
+}
+footer li{
+  float: left;
+  margin: 2vh 6vh 2vh 0;
+  width: 20vh;
+  height: 20vh;
+  text-align: center;
+  cursor: pointer;
+}
+
+footer li h3{
+  font-size: 2vh;
+  margin: 1.5vh 0;
+  color: rgba(255,255,255,0.6);
+}
+footer li .cover{
+  height: 16vh;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center center;
+}
+footer li:hover .cover{
+  box-shadow: 0 0 20px  rgba(166, 78, 248, 0.8);
+}
+footer li:hover h3{
+  color: white;
+}
