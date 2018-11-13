@@ -139,6 +139,11 @@ main .detail ul li{
 main .detail ul li span{
   display: inline-block;
   margin-left: 1vh;
+  font-size: 2vh;
+}
+main .detail ul li .icon{
+  height: 2vh;
+  width: 2vh;
 }
 main .detail .timeBar{
   display: flex;
@@ -209,12 +214,16 @@ footer .box .left_arrow{
   left: -10vh;
 }
 footer .box .left_arrow .icon{
+  height: 2vh;
+  width: 2vh;
   margin-left: -0.4vh;
 }
 footer .box .right_arrow{
   right: -10vh;
 }
 footer .box .right_arrow .icon{
+  height: 2vh;
+  width: 2vh;
   margin-right: -0.2vh;
 }
 footer ul::after{
