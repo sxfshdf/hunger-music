@@ -184,12 +184,17 @@ footer{
   height: 24vh;
   color: white;
 }
-footer .box{
+footer .layout{
   position: relative;
-  /* overflow: hidden; */
   font-size: 2vh;
 }
-footer .box > div{
+footer .box{
+  position: relative;
+  overflow: hidden;
+  height: 24vh;
+}
+footer .layout .left_arrow,
+footer .layout .right_arrow{
   position: absolute;
   top: 7vh;
   display: flex;
@@ -204,27 +209,36 @@ footer .box > div{
   transition: all 0.3s;
   cursor: pointer;
 }
-footer .box > div:hover{
+/* footer .layout .left_arrow.disable,
+footer .layout .right_arrow.disable{
+  display: none;
+} */
+footer .layout .left_arrow:hover,
+footer .layout .right_arrow:hover{
   background: rgb(252,41,83);
 }
-footer:hover .box > div{
+footer:hover .layout > div{
   opacity: 1;
 }
-footer .box .left_arrow{
+footer  .left_arrow{
   left: -10vh;
 }
-footer .box .left_arrow .icon{
+footer .left_arrow .icon{
   height: 2vh;
   width: 2vh;
   margin-left: -0.4vh;
 }
-footer .box .right_arrow{
+footer .right_arrow{
   right: -10vh;
 }
-footer .box .right_arrow .icon{
+footer .right_arrow .icon{
   height: 2vh;
   width: 2vh;
   margin-right: -0.2vh;
+}
+footer ul{
+  position: absolute;
+  left: 0;
 }
 footer ul::after{
   content: '';
@@ -233,13 +247,18 @@ footer ul::after{
 }
 footer li{
   float: left;
-  margin: 2vh 6vh 2vh 0;
+  margin: 2vh 3vh 2vh 0;
   width: 20vh;
   height: 20vh;
   text-align: center;
   cursor: pointer;
 }
-
+footer .cover.active{
+  box-shadow: 0 0 20px  rgba(148, 70, 221, 0.8);
+}
+footer h3.active{
+  color: white;
+}
 footer li h3{
   font-size: 2vh;
   margin: 1.5vh 0;
@@ -252,7 +271,7 @@ footer li .cover{
   background-position: center center;
 }
 footer li:hover .cover{
-  box-shadow: 0 0 20px  rgba(166, 78, 248, 0.8);
+  box-shadow: 0 0 20px  rgba(148, 70, 221, 0.8);
 }
 footer li:hover h3{
   color: white;
