@@ -36,6 +36,7 @@
             left: '-=' + itemWidth*rowCount
           },300,()=>{
             this.isToStart = false
+            this.$left_arrow.removeClass('disable')
             if( parseFloat(this.$box.width()) - parseFloat(this.$ul.css('left')) >= parseFloat(this.$ul.css('width'))){
               this.isToEnd = true
               this.$right_arrow.addClass('disable')
@@ -51,9 +52,10 @@
             left: '+=' + itemWidth*rowCount
           },300,()=>{
             this.isToEnd = false
+            this.$right_arrow.removeClass('disable')
             if( parseFloat(this.$ul.css('left')) >= 0){
               this.isToStart = true
-              this.$right_arrow.addClass('disable')
+              this.$left_arrow.addClass('disable')
             }
           })
         }

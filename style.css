@@ -209,10 +209,10 @@ footer .layout .right_arrow{
   transition: all 0.3s;
   cursor: pointer;
 }
-/* footer .layout .left_arrow.disable,
+footer .layout .left_arrow.disable,
 footer .layout .right_arrow.disable{
   display: none;
-} */
+}
 footer .layout .left_arrow:hover,
 footer .layout .right_arrow:hover{
   background: rgb(252,41,83);
