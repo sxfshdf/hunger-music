@@ -23,18 +23,22 @@
       this.$left_arrow = this.$footer.find('.left_arrow')
       this.isToEnd = false
       this.isToStart = true
+      this.isAnimate = false
       this.bindEvents()
       this.render()
     },
     bindEvents: function(){
       // let _this = this
       this.$right_arrow.on('click',(e)=>{
+        if(this.isAnimate) return
         let itemWidth = this.$box.find('li').outerWidth(true)
         let rowCount = Math.floor(this.$box.width()/itemWidth) // 每一行的完整显示的个数
         if(!this.isToEnd){
+          this.isAnimate = true
           this.$ul.animate({
             left: '-=' + itemWidth*rowCount
-          },300,()=>{
+          },400,()=>{
+            this.isAnimate = false
             this.isToStart = false
             this.$left_arrow.removeClass('disable')
             if( parseFloat(this.$box.width()) - parseFloat(this.$ul.css('left')) >= parseFloat(this.$ul.css('width'))){
@@ -45,12 +49,15 @@
         }
       })
       this.$left_arrow.on('click',(e)=>{
+        if(this.isAnimate) return
         let itemWidth = this.$box.find('li').outerWidth(true)
         let rowCount = Math.floor(this.$box.width()/itemWidth)
         if( !this.isToStart){
+          this.isAnimate = true
           this.$ul.animate({
             left: '+=' + itemWidth*rowCount
-          },300,()=>{
+          },400,()=>{
+            this.isAnimate = false
             this.isToEnd = false
             this.$right_arrow.removeClass('disable')
             if( parseFloat(this.$ul.css('left')) >= 0){
@@ -68,7 +75,7 @@
       })
     },
     render: function(){
-      $.getJSON('http://api.jirengu.com/fm/getChannels.php')
+      $.getJSON('//api.jirengu.com/fm/getChannels.php')
       .done((ret)=>{
         this.renderFooter(ret.channels)
       }).fail(()=>{
@@ -96,17 +103,39 @@
     }
   }
 
-  var App = {
+  var Fm = {
+    channelId: null,
+    song: null,
+    audio: null,
     init: function(){
+      this.audio = new Audio()
+      this.container = $('#page-music')
       this.bindEvents()
     },
     bindEvents: function(){
-      EventCenter.on('select-special',function(e,data){
-        console.log('select',data)
+      EventCenter.on('select-special',(e,channelId)=>{
+        this.channelId = channelId
+        this.loadMusic(function(){
+          this.setMusic()
+        }.bind(this))
       })
+    },
+    loadMusic: function(callback){
+      $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',{channel: this.channelID})
+        .done((ret)=>{
+          this.song = ret['song'][0]
+          callback()
+      })
+    },
+    setMusic: function(){
+      // console.log('load music...')
+      // console.log(this.song)
+      this.audio.src = this.song.url
+      console.log(this.song.url)
     }
   }
 
   Footer.init()
-  App.init()
+  Fm.init()
+
 }.call()
