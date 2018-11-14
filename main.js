@@ -71,7 +71,10 @@
         $(e.currentTarget).find('.cover').addClass('active').parent().siblings().find('.cover.active').removeClass('active')
         $(e.currentTarget).find('h3').addClass('active').parent().siblings().find('h3.active').removeClass('active')
 
-        EventCenter.fire('select-special',$(e.currentTarget).attr('data-channel-id'))
+        EventCenter.fire('select-special',{
+          channelId: $(e.currentTarget).attr('data-channel-id'),
+          channelName: $(e.currentTarget).attr('data-channel-name')
+        })
       })
     },
     render: function(){
@@ -84,9 +87,8 @@
     },
     renderFooter: function(channels){
       let html = ''
-      console.log(channels)
       channels.forEach((channels)=>{
-        html += '<li data-channel-id = ' + channels.channel_id + '>'
+        html += '<li data-channel-id = ' + channels.channel_id + ' data-channel-name ='+ channels.name+'>'
               + '<div class="cover" style="background-image: url('+ channels.cover_small + ')"></div>'  
               + '<h3>'+ channels.name + '</h3>'
               + ' </li>'
@@ -105,16 +107,19 @@
 
   var Fm = {
     channelId: null,
+    channelName: null,
     song: null,
     audio: null,
     init: function(){
       this.audio = new Audio()
+      // this.audio.autoplay = true
       this.container = $('#page-music')
       this.bindEvents()
     },
     bindEvents: function(){
-      EventCenter.on('select-special',(e,channelId)=>{
-        this.channelId = channelId
+      EventCenter.on('select-special',(e,channelObject)=>{
+        this.channelId = channelObject.channelId
+        this.channelName = channelObject.channelName
         this.loadMusic(function(){
           this.setMusic()
         }.bind(this))
@@ -128,10 +133,15 @@
       })
     },
     setMusic: function(){
-      // console.log('load music...')
-      // console.log(this.song)
+      console.log(this.song)
       this.audio.src = this.song.url
-      console.log(this.song.url)
+      console.log(this.audio.src)
+      $('.bg').css('background-image','url('+ this.song.picture +')')
+      this.container.find('.left figure').css('background','url('+ this.song.picture +')')
+      this.container.find('.detail h1').text(this.song.title)
+      this.container.find('.detail .auther').text(this.song.artist)
+      this.container.find('.detail .special').text(this.song.lrc)
+      this.container.find('.detail .tag').text(this.channelName)
     }
   }
 
