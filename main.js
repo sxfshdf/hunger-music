@@ -157,8 +157,21 @@
     loadLyric: function(){
       $.getJSON('//jirenguapi.applinzi.com/fm/getLyric.php',{sid: this.song.sid})
         .done((ret)=>{
-          console.log(ret)
-          
+          let lyric = ret.lyric
+          let lyricObject = {}
+          lyric.forEach((line)=>{
+            //[01:10.25][01:20.25]It a new day
+            let time = line.match(/\d{2}:\d{2}/g)
+            //time == ['01:10.25', '01:20.25']
+            let string = line.replace(/\[.+?\]/g, '')
+            // 判断 time 是否为数组
+            if( Array.isArray(time)){
+              time.forEach((time)=>{
+                lyricObject[time] = string
+              })
+            }
+          })
+          this.lyricObject = lyricObject
       })
     },
     setMusic: function(){
@@ -183,6 +196,11 @@
       }
       this.container.find('.currentTime').text(minute + ':' + second)
       this.container.find('.progressBar').css('width', this.audio.currentTime/this.audio.duration*100+'%')
+      // let lineLyric = this.lyricObject['0'+minute+':'+second]
+      // console.log(lineLyric)
+      // if(lineLyric){
+      //   this.container.find('lyric p').text(lineLyric).boomText() //可以添加不同的 css 效果，实现歌词不同效果的变化
+      // }
     },
     
   }
@@ -190,4 +208,25 @@
   Footer.init()
   Fm.init()
 
+  $.fn.boomText = function(type){
+    type = type || 'rollIn'
+    console.log(type)
+    this.html(function(){
+      var arr = $(this).text()
+      .split('').map(function(word){
+          return '<span class="boomText">'+ word + '</span>'
+      })
+      return arr.join('')
+    })
+    
+    var index = 0
+    var $boomTexts = $(this).find('span')
+    var clock = setInterval(function(){
+      $boomTexts.eq(index).addClass('animated ' + type)
+      index++
+      if(index >= $boomTexts.length){
+        clearInterval(clock)
+      }
+    }, 300)
+  }
 }.call()

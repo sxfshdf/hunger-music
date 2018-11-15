@@ -178,7 +178,7 @@ main .detail .auther{
   font-size: 3vh;
   color: white;
 }
-main .detail .lyric{
+main .detail .lyric p{
   margin-top: 2vh;
   font-size: 2vh;
   color: rgba(255,255,255,0.4);
