@@ -108,11 +108,12 @@
   var Fm = {
     channelId: null,
     channelName: null,
+    container: null,
     song: null,
     audio: null,
     init: function(){
       this.audio = new Audio()
-      // this.audio.autoplay = true
+      this.audio.autoplay = true
       this.container = $('#page-music')
       this.bindEvents()
     },
@@ -120,16 +121,44 @@
       EventCenter.on('select-special',(e,channelObject)=>{
         this.channelId = channelObject.channelId
         this.channelName = channelObject.channelName
-        this.loadMusic(function(){
-          this.setMusic()
-        }.bind(this))
+        this.loadMusic()
+      })
+      this.container.find('.button-play').on('click',(e)=>{
+        let $button = $(e.currentTarget)
+        if( $button.find('use').attr('xlink:href') === '#icon-play' ){
+          $button.find('use').attr('xlink:href','#icon-pause')
+          this.audio.play()
+        }else{
+          $button.find('use').attr('xlink:href','#icon-play')
+          this.audio.pause()
+        }
+      })
+      this.container.find('.button-next').on('click',(e)=>{
+        this.loadMusic()
+      })
+      this.audio.addEventListener('play',()=>{
+        clearInterval(this.id)
+        this.id = setInterval(()=>{
+          this.updateStatus()
+        },1000)
+      })
+      this.audio.addEventListener('pause',()=>{
+        clearInterval(this.id)
       })
     },
-    loadMusic: function(callback){
+    loadMusic: function(){
       $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',{channel: this.channelID})
         .done((ret)=>{
           this.song = ret['song'][0]
-          callback()
+          this.setMusic()
+          this.loadLyric()
+      })
+    },
+    loadLyric: function(){
+      $.getJSON('//jirenguapi.applinzi.com/fm/getLyric.php',{sid: this.song.sid})
+        .done((ret)=>{
+          console.log(ret)
+          
       })
     },
     setMusic: function(){
@@ -140,9 +169,22 @@
       this.container.find('.left figure').css('background','url('+ this.song.picture +')')
       this.container.find('.detail h1').text(this.song.title)
       this.container.find('.detail .auther').text(this.song.artist)
-      this.container.find('.detail .special').text(this.song.lrc)
+      
       this.container.find('.detail .tag').text(this.channelName)
-    }
+      this.container.find('.button-play use').attr('xlink:href','#icon-pause')
+    },
+    updateStatus: function(){
+      let minute = Math.floor( this.audio.currentTime/60 )
+      let second = Math.floor( this.audio.currentTime%60)+''
+      if( second.length === 2){
+         second
+      }else{
+         second = '0' + second
+      }
+      this.container.find('.currentTime').text(minute + ':' + second)
+      this.container.find('.progressBar').css('width', this.audio.currentTime/this.audio.duration*100+'%')
+    },
+    
   }
 
   Footer.init()
