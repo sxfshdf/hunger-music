@@ -196,11 +196,13 @@
       }
       this.container.find('.currentTime').text(minute + ':' + second)
       this.container.find('.progressBar').css('width', this.audio.currentTime/this.audio.duration*100+'%')
-      // let lineLyric = this.lyricObject['0'+minute+':'+second]
-      // console.log(lineLyric)
-      // if(lineLyric){
-      //   this.container.find('lyric p').text(lineLyric).boomText() //可以添加不同的 css 效果，实现歌词不同效果的变化
-      // }
+      if(this.lyricObject){
+        let lineLyric = this.lyricObject['0'+minute+':'+second]
+        if(lineLyric){
+          this.container.find('lyric p').text(lineLyric).boomText() //可以添加不同的 css 效果，实现歌词不同效果的变化
+        }
+      }
+      
     },
     
   }
